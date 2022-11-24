@@ -1,11 +1,11 @@
 import { FastifyInstance } from 'fastify';
-import { CreateCategory } from './interfaces/create-category';
+import { CreateCategory } from './types/create-category';
 import { isUUID } from '../utils/validators';
 import { CategoryController } from './category.controller';
-import { GetOneCategoryOptions } from './interfaces/get-one-category.options';
-import { UpdateCategory } from './interfaces/update-category';
+import { GetOneCategoryOptions } from './types/get-one-category.options';
+import { UpdateCategory } from './types/update-category';
 import { CategoryParser } from './category.parser';
-import { GetCategoriesDto } from './interfaces/get-categories.dto';
+import { GetCategoriesDto } from './types/get-categories.dto';
 import { BaseError } from '../utils/api.error';
 
 

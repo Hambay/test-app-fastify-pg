@@ -2,10 +2,11 @@ import { BaseError } from '../utils/api.error';
 import { prepareForSearch } from '../utils/replacers';
 import { isSlug } from '../utils/validators';
 import { Category } from './models/category';
-import { CreateCategory } from './interfaces/create-category';
-import { GetCategoriesDto } from './interfaces/get-categories.dto';
-import { GetCategoriesOptions } from './interfaces/get-categories.options';
-import { UpdateCategory } from './interfaces/update-category';
+import { CreateCategory } from './types/create-category';
+import { GetCategoriesDto } from './types/get-categories.dto';
+import { GetCategoriesOptions } from './types/get-categories.options';
+import { UpdateCategory } from './types/update-category';
+import { SortItem } from '../utils/types/sort-item';
 
 
 export class CategoryParser {
@@ -57,7 +58,7 @@ export class CategoryParser {
     }
     
     if (sort) {
-      options.sorts = [];
+      const sorts: SortItem<Category>[] = [];
 
       sort.split(',').forEach((sortStr) => {
         const sortName = sortStr.replace(/^-/, '') ;
@@ -69,8 +70,10 @@ export class CategoryParser {
         }
         const propertyName = sortName as keyof Category;
 
-        options.sorts?.push({ propertyName, directionAsc });
+        sorts.push({ propertyName, directionAsc });
       });
+
+      if (sorts.length) options.sorts = sorts;
     }
 
     // console.log('options', options);

@@ -3,10 +3,10 @@ import { prepareOrderStatement } from '../utils/prepare-order-statement';
 import { ItemsWithCount } from '../utils/types/items-with-count';
 import { TotalCount } from '../utils/types/total-count';
 import { Category } from './models/category';
-import { CreateCategory } from './interfaces/create-category';
-import { GetCategoriesOptions } from './interfaces/get-categories.options';
-import { GetOneCategoryOptions } from './interfaces/get-one-category.options';
-import { UpdateCategory } from './interfaces/update-category';
+import { CreateCategory } from './types/create-category';
+import { GetCategoriesOptions } from './types/get-categories.options';
+import { GetOneCategoryOptions } from './types/get-one-category.options';
+import { UpdateCategory } from './types/update-category';
 
 
 export class CategoryController {
@@ -16,6 +16,8 @@ export class CategoryController {
   constructor(private readonly pg: PostgresDb) {}
 
   async create(dto: CreateCategory): Promise<Category> {
+    console.log('create', dto);
+    
     const query =
       `INSERT into ${this.tableName}
       (slug, name, description, active)
@@ -24,11 +26,11 @@ export class CategoryController {
     const args = [
       dto.slug,
       dto.name,
-      dto.description,
+      dto.description ?? 'NULL',
       dto.active
     ];
 
-    // console.log(query, args);
+    console.log(query, args);
 
     const result = await this.pg.query<Category>(query, args);
     

@@ -1,4 +1,4 @@
-import { CreateCategory } from './category/interfaces/create-category';
+import { CreateCategory } from './category/types/create-category';
 
 export const INITIAL_DATA: CreateCategory[] = [
   { slug: 'electronic', name: 'Електроника', description: 'Електро товары', active: true },
